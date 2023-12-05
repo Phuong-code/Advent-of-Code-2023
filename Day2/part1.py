@@ -31,7 +31,7 @@ def check_game(game):
 
 file = open("input.txt", "r")
 content = file.readlines()
-print(content)
+# print(content)
 file.close()
 
 sum = 0
