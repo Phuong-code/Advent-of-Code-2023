@@ -1,68 +1,35 @@
-def convert_seed(seeds, map):
-    converted_seeds = []
-    for line in map:
-        list = line.split()
-        list[0] = int(list[0])
-        list[1] = int(list[1])
-        list[2] = int(list[2])
-        diff = list[1]-list[0]
-        x = list[1]
-        y = list[1] + list[2] -1
-        for i in range(len(seeds)): 
-            a = seeds[i][0]
-            b = seeds[i][1]
-            if (b-a) < (y-x):
-                if (a<b<x<y) or (x<y<a<b):
-                    continue
-                elif (a<b==x<y):
-                    converted_seeds.append([b-diff,0])
-                elif (a<=x<b<y):
-                    converted_seeds.append([x-diff, b-diff])
-                elif (x<a<b<=y):
-                    converted_seeds.append([a-diff, b-diff])
-
-    #         if seeds[i] != "":
-    #             if (list[1] <= seeds[i]) and (seeds[i] <= (list[1] + list[2] -1)):
-    #                 seeds[i] -= diff
-    #                 converted_seeds.append(seeds[i])
-    #                 seeds[i] = ""
-    # for seed in seeds:
-    #     if seed != "":
-    #         converted_seeds.append(seed)
-    return converted_seeds
-
-
-file = open("Day5\input2.txt", "r")
-content = file.readlines()
-# print(content)
+file = open("Day5\input.txt", "r")
+inputs, *blocks = file.read().split("\n\n")
 file.close()
 
-new_seeds = []
-seeds = content[0][content[0].index(":")+1:].split()
-for i in range(len(seeds)):
-    if i % 2 == 1:
-        seeds[i] = int(seeds[i]) + int(seeds[i-1]) -1
-        new_seeds.append([seeds[i-1], seeds[i]])
-    else:
-        seeds[i] = int(seeds[i])
-seeds = new_seeds
-print(seeds)
+inputs = list(map(int, inputs.split(":")[1].split()))
 
-seed_to_soild_map = content[content.index("seed-to-soil map:\n")+1:content.index("soil-to-fertilizer map:\n")-1]
-soil_to_fertilizier_map = content[content.index("soil-to-fertilizer map:\n")+1:content.index("fertilizer-to-water map:\n")-1]
-fertilizer_to_water_map = content[content.index("fertilizer-to-water map:\n")+1:content.index("water-to-light map:\n")-1]
-water_to_light_map = content[content.index("water-to-light map:\n")+1:content.index("light-to-temperature map:\n")-1]
-light_to_temperature_map = content[content.index("light-to-temperature map:\n")+1:content.index("temperature-to-humidity map:\n")-1]
-temperature_to_humidity_map = content[content.index("temperature-to-humidity map:\n")+1:content.index("humidity-to-location map:\n")-1]
-humidity_to_location_map = content[content.index("humidity-to-location map:\n")+1:]
+seeds = []
 
-# seeds = convert_seed(seeds, seed_to_soild_map)
-# seeds = convert_seed(seeds,soil_to_fertilizier_map)
-# seeds = convert_seed(seeds, fertilizer_to_water_map)
-# seeds = convert_seed(seeds, water_to_light_map)
-# seeds = convert_seed(seeds, light_to_temperature_map)
-# seeds = convert_seed(seeds, temperature_to_humidity_map)
-# seeds = convert_seed(seeds,humidity_to_location_map)
+for i in range(0, len(inputs), 2):
+    seeds.append((inputs[i], inputs[i] + inputs[i + 1]))
 
-# print("min:")
-# print(min(seeds))
+for block in blocks:
+    ranges = []
+    for line in block.splitlines()[1:]:
+        ranges.append(list(map(int, line.split())))
+    new = []
+    while len(seeds) > 0:
+        s, e = seeds.pop()
+        for a, b, c in ranges:
+            os = max(s, b)
+            oe = min(e, b + c)
+            if os < oe:
+                new.append((os - b + a, oe - b + a))
+                if os > s:
+                    seeds.append((s, os))
+                if e > oe:
+                    seeds.append((oe, e))
+                break
+        else:
+            new.append((s, e))
+    seeds = new
+
+print(min(seeds)[0])
+
+
