@@ -30,9 +30,6 @@ for row in range(len(transposed_grid)):
     if all_same == True:
         empty_column.append(row)
 
-# print(empty_row)
-# print(empty_column)
-
 def get_distance(a ,b, expand):
     x = abs(b[0] - a[0])
     columns = 0
@@ -57,11 +54,7 @@ for row in range(len(grid)):
 
 sum = 0
 expand = 1000000
-# expand = 99
-# print(star_location)
 for i in range(len(star_location)):
     for j in range(i+1,len(star_location)):
         sum += get_distance(star_location[i], star_location[j], expand)
 print(sum)
-
-# 82000210 too low
