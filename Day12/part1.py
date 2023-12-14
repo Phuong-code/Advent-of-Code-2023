@@ -25,25 +25,6 @@ def count_all_pos(spring, group):
             break
     return count
 
-
-def count_valid_arrangements(springs, group_sizes, start=0):
-    """
-    Recursively count the number of valid arrangements for a given row.
-    """
-    if '?' not in springs:
-        return 1 if is_valid(springs, group_sizes) else 0
-
-    count = 0
-    for i in range(start, len(springs)):
-        if springs[i] == '?':
-            # Try with operational spring
-            count += count_valid_arrangements(springs[:i] + '.' + springs[i+1:], group_sizes, i + 1)
-            # Try with damaged spring
-            count += count_valid_arrangements(springs[:i] + '#' + springs[i+1:], group_sizes, i + 1)
-            break
-
-    return count
-
 file = open("Day12\input.txt","r")
 content = file.read().split("\n")
 file.close()
