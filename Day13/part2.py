@@ -40,4 +40,4 @@ for i in blocks:
     sum += check_column(block) + check_row(block)*100
 print(sum)
 
-# 33780 correct answer
+# 23479 correct answer

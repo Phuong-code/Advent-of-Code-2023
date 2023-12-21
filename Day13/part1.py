@@ -37,4 +37,4 @@ for i in blocks:
     sum += check_column(block) + check_row(block)*100
 print(sum)
 
-# 921 too low
+# 33780 correct answer
