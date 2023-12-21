@@ -1,52 +1,29 @@
 def check_column(block):
-    if len(block[0]) % 2 == 1:
-        mid = len(block[0])//2
-    else:
-        mid = len(block[0])//2 - 0.5
-    for column in range(0, len(block[0])-1):
-        for row in range(len(block)):
-            if block[row][column] != block[row][column+1]:
+    num_columns = len(block[0])
+
+    for mid_col in range(num_columns - 1):
+        left, right = mid_col, mid_col + 1
+        is_symmetric = True
+
+        while left >= 0 and right < num_columns:
+            for row in block:
+                if row[left] != row[right]:
+                    is_symmetric = False
+                    break
+            if not is_symmetric:
                 break
-        else:
-            if column < mid:
-                for row in range(len(block)):
-                    if block[row][0] != block[row][column*2]:
-                        break
-                else:
-                    return column+1
-            else:
-                for row in range(len(block)):
-                    if block[row][len(block[0])-1] != block[row][len(block[0])-1 - mid*2+1]:
-                        break
-                else:
-                    return column+1
+            left -= 1
+            right += 1
+
+        if is_symmetric:
+            return mid_col + 1
     return 0
+
 
 def check_row(block):
     rows, cols = len(block), len(block[0])
     block = [[block[j][i] for j in range(rows)] for i in range(cols)]
-    if len(block[0]) % 2 == 1:
-        mid = len(block[0])//2
-    else:
-        mid = len(block[0])//2 - 0.5
-    for column in range(0, len(block[0])-1):
-        for row in range(len(block)):
-            if block[row][column] != block[row][column+1]:
-                break
-        else:
-            if column < mid:
-                for row in range(len(block)):
-                    if block[row][0] != block[row][column*2]:
-                        break
-                else:
-                    return column+1
-            else:
-                for row in range(len(block)):
-                    if block[row][len(block[0])-1] != block[row][len(block[0])-1 - mid*2+1]:
-                        break
-                else:
-                    return column+1
-    return 0
+    return check_column(block)
 
 
 file = open("Day13\input.txt", "r")
@@ -60,4 +37,4 @@ for i in blocks:
     sum += check_column(block) + check_row(block)*100
 print(sum)
 
-
+# 921 too low
