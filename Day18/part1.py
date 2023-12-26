@@ -2,7 +2,7 @@ with open("Day18\input.txt", "r") as file:
     instructions = [tuple(line[0:4].strip().split(" ")) for line in file.read().split("\n")]
 
 row_nums = col_nums = 801
-# row_nums = col_nums = 51
+# row_nums = col_nums = 51 # for input-example.txt
 cur_row = (row_nums-1) //2
 cur_col = (row_nums-1) //2
 lava_grid = [["." for i in range(col_nums)] for j in range(row_nums)]
@@ -51,10 +51,4 @@ for row in range(row_nums):
         if lava_grid[row][col] == "#":
             result += 1
 print(result)
-
-# Open a file in write mode
-with open('Day18\output-grid2.txt', 'w') as file:
-    for row in lava_grid:
-        # Convert each row to a string and write it to the file
-        file.write(' '.join(map(str, row)) + '\n')
 
