@@ -23,7 +23,6 @@ def count(part_dict, target="in"):
             copy[part] = T
             total += count(copy, workflow)
         if F[0] <= F[1]:
-            part_dict = dict(part_dict)
             part_dict[part] = F
         else:
             break
