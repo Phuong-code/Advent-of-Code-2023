@@ -23,9 +23,6 @@ for key in list(config_dict.keys()):
         val = config_dict.pop(key)
         config_dict[key[1:]] = val
 
-# print(config_dict)
-# print(ff_dict)
-# print(conjun_dict)
 lo = 0
 hi = 0
 for _ in range(1000):
