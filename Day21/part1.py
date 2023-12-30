@@ -1,4 +1,4 @@
-with open("Day21\input-example.txt", "r") as file:
+with open("Day21\input.txt", "r") as file:
     grid = [list(line) for line in file.read().split("\n")]
 
 row_num = len(grid)
@@ -17,7 +17,7 @@ while queue:
     row, col, step = queue.pop(0)
     if step % 2 == 0:
         ans.add((row, col))
-    if step == 265013:
+    if step == 64:
         continue
     for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
         new_row = row + dr
