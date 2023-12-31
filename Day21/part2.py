@@ -6,11 +6,17 @@ with open("Day21\input.txt", "r") as file:
 row_num = len(grid)
 col_num = len(grid[0])
 
+found = False
 for row in range(row_num):
     for col in range(col_num):
         if grid[row][col] == "S":
             s_row = row
             s_col = col
+            found = True
+            break
+    if found:
+        break
+
 
 total_step_list = [65 +131*i for i in range(3)]
 X,Y=[0,1,2],[]
