@@ -1,4 +1,4 @@
-with open("Day23\\input.txt", "r") as file:
+with open("Day23\input.txt", "r") as file:
     grid = [list(line) for line in file.read().split("\n")]
 
 row_num = len(grid)
@@ -28,8 +28,6 @@ queue = [(s_row, s_col, 0)]
 max_step = 0
 while queue:
     row, col, step = queue.pop()
-    # if max_step == 94:
-    #     break
     if row == e_row and col == e_col:
         max_step = max(step, max_step)
     for dr, dc in dict[grid[row][col]]:
