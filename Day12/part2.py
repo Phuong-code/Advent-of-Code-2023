@@ -1,42 +1,42 @@
-def is_valid(spring, group):
-    group_result = []
-    count = 0
-    for c in spring:
-        if c == "#":
-            count += 1
-        elif count > 0:
-            group_result.append(count)
-            count = 0
-    if count != 0:
-        group_result.append(count)
-    return group_result == group
-
-def count_all_pos(spring, group):
-    if "?" not in spring:
-        if is_valid(spring, group):
-            return 1
-        else:
-            return 0
-    count = 0
-    for i in range(len(spring)):
-        if spring[i] == "?":
-            count += count_all_pos(spring[:i]+"."+spring[i+1:], group)
-            count += count_all_pos(spring[:i]+"#"+spring[i+1:], group)
-            break
-    return count
-
 file = open("Day12\input.txt","r")
 content = file.read().split("\n")
 file.close()
 
-# sum = 0
-# for line in content:
-#     spring, group = line.split()
-#     group = list(map(int, group.split(",")))
-#     sum += count_all_pos(spring, group)
+cache = {}
 
-# print(sum)
+def count(spring, group):
+    if spring == "":
+        return 1 if group == () else 0
+    
+    if group == ():
+        return 1 if "#" not in spring else 0
 
-print(count_all_pos(".??..??...?##..??..??...?##..??..??...?##..??..??...?##..??..??...?##.", [1,1,3,1,1,3,1,1,3,1,1,3,1,1,3]))
+    result = 0
+
+    key = (spring, group)
+    if key in cache:
+        return cache[key]
+
+    if spring[0] in ".?":
+        result += count(spring[1:], group)
+
+    if spring[0] in "#?":
+        if len(spring) >= group[0] and "." not in spring[1:group[0]] and (len(spring) == group[0] or spring[group[0]] != "#"):
+            result += count(spring[group[0]+1:], group[1:])
+    
+    cache[key] = result
+    return result
+
+
+total = 0
+for line in content:
+    spring, group = line.split()
+    group = tuple(map(int, group.split(",")))
+    spring = "?".join([spring]*5)
+    group = group * 5
+    total += count(spring, group)
+
+print(total)
+
 
 
