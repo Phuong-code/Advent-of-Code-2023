@@ -28,6 +28,3 @@ for i in range(len(bricks)):
         total += 1
 
 print(total)
-
-
-
