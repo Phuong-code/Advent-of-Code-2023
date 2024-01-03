@@ -19,4 +19,3 @@ for i, (sx, sy, sz, vx, vy, vz) in enumerate(hailstones):
 answer = answers[0]
 
 print(answer[xr] + answer[yr] + answer[zr])
-print(i)
